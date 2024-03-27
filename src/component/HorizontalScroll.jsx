@@ -1,12 +1,10 @@
 import {
     motion,
     useTransform,
-    useScroll,
-    useMotionTemplate,
-    useMotionValue,
-    useSpring,
+    useScroll
 } from "framer-motion";
 import React, { useRef } from "react";
+import { useNavigate } from 'react-router-dom'
 
 const HorizontalScroll = ({ posts }) => {
     const targetRef = useRef(null);
@@ -37,10 +35,18 @@ const HorizontalScroll = ({ posts }) => {
 };
 
 const Card = ({ post }) => {
+
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/adamkounis/${post.id}`);
+    }
+
     return (
         <div
             key={post.id}
-            className="group relative h-[40rem] w-[29rem] rounded-xl bg-gradient-to-br from-purple-400 to-blue-700 mr-12"
+            onClick={handleClick}
+            className="card group relative h-[40rem] w-[29rem] rounded-xl bg-gradient-to-br from-purple-400 to-blue-700 mr-12 cursor-pointer"
         >
             <div
                 style={{
@@ -51,7 +57,7 @@ const Card = ({ post }) => {
                 }}
                 className="absolute inset-4 grid place-content-center rounded-xl bg-white shadow-lg"
             ></div>
-            <div className="absolute inset-0 z-10 grid place-content-center">
+            <div className="card absolute inset-0 z-10 grid place-content-center">
                 <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/0 backdrop-blur-lg rounded-lg opacity-70"></div>
                     <div className="relative p-8 text-center">

@@ -1,11 +1,10 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { motion, useTransform, useScroll } from "framer-motion";
-import { useRef } from "react";
 import HorizontalScroll from './component/HorizontalScroll';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import PostPage from './pages/PostPage';
 
 const supabase = createClient(import.meta.env.VITE_API_BASE_URL, import.meta.env.VITE_SUPABASE_DB_KEY);
 
@@ -20,12 +19,12 @@ function App() {
     const { data, error } = await supabase
       .from("Posts")
       .select()
-      .order("created_at", { ascending: false }); // Order by 'created_at' in descending order
-  
+      .order("created_at", { ascending: false });
+
     if (data) {
       setPosts(data);
     }
-  
+
     if (error) {
       console.error("Error fetching posts:", error.message);
     }
@@ -33,9 +32,11 @@ function App() {
 
   return (
     <>
-      <div className="bg-peach-100">
-        <HorizontalScroll posts={posts} />
-      </div>
+      {/* <HorizontalScroll posts={posts} /> */}
+      <Routes>
+        <Route path="/" element={<HorizontalScroll posts={posts} />} />
+        <Route path="/adamkounis/:postId" element={<PostPage />} />
+      </Routes>
     </>
   )
 }
