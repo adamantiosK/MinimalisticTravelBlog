@@ -5,6 +5,7 @@ import HorizontalScroll from './component/HorizontalScroll';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PostPage from './pages/PostPage';
+import TrialPageEdit from './pages/TrialPagePost';
 
 const supabase = createClient(import.meta.env.VITE_API_BASE_URL, import.meta.env.VITE_SUPABASE_DB_KEY);
 
@@ -36,6 +37,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HorizontalScroll posts={posts} />} />
         <Route path="/adamkounis/:postId" element={<PostPage />} />
+        <Route path="/trialPageEdit" element={<TrialPageEdit />} />
       </Routes>
     </>
   )
