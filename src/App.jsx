@@ -4,15 +4,13 @@ import HorizontalScroll from './component/HorizontalScroll';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PostPage from './pages/PostPage';
+import PostWrittingPage from './component/PostWrittingPage';
 
 function App() {
-  console.log('App component rendered');
-
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log('useEffect triggered');
     getPosts();
   }, []);
 
@@ -37,6 +35,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HorizontalScroll posts={posts} isLoading={isLoading} />} />
         <Route path="/adamkounis/:postId" element={<PostPage />} />
+        <Route path="/adamkounis" element={<PostWrittingPage />} />
       </Routes>
     </>
   )
