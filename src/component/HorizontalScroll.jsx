@@ -6,7 +6,7 @@ import {
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 
-const HorizontalScroll = ({ posts }) => {
+const HorizontalScroll = ({ posts, isLoading }) => {
     const targetRef = useRef(null);
     const { scrollYProgress } = useScroll({
         target: targetRef,
@@ -17,6 +17,14 @@ const HorizontalScroll = ({ posts }) => {
         [0, 0.8],
         ["31%", window.innerWidth >= 1024 ? "-75%" : "-45%"]
     );
+
+    if (isLoading) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+            </div>
+        );
+    }
 
     return (
         <section ref={targetRef} className="relative h-[200vh] bg-gray-800">

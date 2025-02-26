@@ -9,6 +9,7 @@ function App() {
   console.log('App component rendered');
 
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     console.log('useEffect triggered');
@@ -23,8 +24,10 @@ function App() {
       }
       const data = await response.json();
       setPosts(data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching posts:", error.message);
+      setIsLoading(false);
     }
   }
 
@@ -32,7 +35,7 @@ function App() {
     <>
       {/* <HorizontalScroll posts={posts} /> */}
       <Routes>
-        <Route path="/" element={<HorizontalScroll posts={posts} />} />
+        <Route path="/" element={<HorizontalScroll posts={posts} isLoading={isLoading} />} />
         <Route path="/adamkounis/:postId" element={<PostPage />} />
       </Routes>
     </>
