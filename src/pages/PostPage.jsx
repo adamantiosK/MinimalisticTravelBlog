@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { createClient } from '@supabase/supabase-js';
 import DOMPurify from 'dompurify';
 
-
-// Initialize Supabase client
-const supabase = createClient(import.meta.env.VITE_API_BASE_URL, import.meta.env.VITE_SUPABASE_DB_KEY);
 
 const PostPage = () => {
     const { postId } = useParams();
@@ -14,17 +10,16 @@ const PostPage = () => {
 
     useEffect(() => {
         const fetchPost = async (id) => {
-            const { data, error } = await supabase
-                .from("Posts")
-                .select("*")
-                .eq('id', id)
-                .single();
-
-            if (data) {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}api/minimalistic-blog/post/${id}`);
+                if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
                 setPost(data);
-            } else if (error) {
-                console.error("Error fetching post:", error.message);
-            }
+              } catch (error) {
+                console.error("Error fetching posts:", error.message);
+              }
         };
 
         if (postId) {
@@ -48,14 +43,16 @@ const PostPage = () => {
         <div className="flex flex-col min-h-screen">
             {/* Title with full-width background */}
             <div className="bg-gray-900 text-white">
-                <div className="container mx-auto px-4 py-8 flex items-center">
-                    <button onClick={handleBackClick} className="card flex items-center mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                        </svg>
-                        <span className="text-lg">Back</span>
-                    </button>
-                    <h1 className="text-5xl font-bold text-center flex-grow font-pacifico">{post.title}</h1>
+                <div className="container mx-auto px-4 py-8 flex items-center justify-center">
+                    <div className="absolute left-0 ml-4">
+                        <button onClick={handleBackClick} className="card flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                            </svg>
+                            <span className="text-lg"></span>
+                        </button>
+                    </div>
+                    <h1 className="text-5xl font-bold text-center font-pacifico">{post.title}</h1>
                 </div>
             </div>
 
@@ -71,7 +68,7 @@ const PostPage = () => {
             {/* Footer with dark shade, stuck to the bottom */}
             <div className="bg-gray-900 text-white text-center p-1">
                 <div className="container mx-auto">
-                    <p>© 2024 The Minimalistic Travel Blog. All rights reserved.</p>
+                    <p>© 2025 The Minimalistic Travel Blog. All rights reserved.</p>
                 </div>
             </div>
         </div>

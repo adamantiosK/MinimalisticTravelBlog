@@ -1,31 +1,29 @@
 import './App.css'
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 import HorizontalScroll from './component/HorizontalScroll';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PostPage from './pages/PostPage';
 
-const supabase = createClient(import.meta.env.VITE_API_BASE_URL, import.meta.env.VITE_SUPABASE_DB_KEY);
-
 function App() {
+  console.log('App component rendered');
+
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    console.log('useEffect triggered');
     getPosts();
   }, []);
 
   async function getPosts() {
-    const { data, error } = await supabase
-      .from("Posts")
-      .select()
-      .order("created_at", { ascending: false });
-
-    if (data) {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}api/minimalistic-blog/posts`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
       setPosts(data);
-    }
-
-    if (error) {
+    } catch (error) {
       console.error("Error fetching posts:", error.message);
     }
   }

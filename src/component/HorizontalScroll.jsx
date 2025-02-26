@@ -3,7 +3,7 @@ import {
     useTransform,
     useScroll
 } from "framer-motion";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 
 const HorizontalScroll = ({ posts }) => {
@@ -12,13 +12,17 @@ const HorizontalScroll = ({ posts }) => {
         target: targetRef,
     });
 
-    const x = useTransform(scrollYProgress, [0, 1], ["1%", "-95%"]);
+    const x = useTransform(
+        scrollYProgress, 
+        [0, 0.8],
+        ["31%", window.innerWidth >= 1024 ? "-75%" : "-45%"]
+    );
 
     return (
-        <section ref={targetRef} className="relative h-[300vh] bg-gray-800">
-            <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-                <motion.div style={{ x }} className="flex gap-4">
-                    <div className="flex-shrink-0 w-[48rem] h-[30rem] flex flex-col items-center justify-center">
+        <section ref={targetRef} className="relative h-[200vh] bg-gray-800">
+            <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+                <motion.div style={{ x }} className="flex translate-x-[0%] items-center">
+                    <div className="w-[48rem] h-[40rem] flex flex-col items-center justify-center">
                         <h2 className="text-9xl font-bold text-white font-pacifico">Every</h2>
                         <h3 className="text-8xl font-bold text-white font-pacifico">Day</h3>
                         <h2 className="text-9xl font-bold text-white font-pacifico">Norm</h2>
@@ -35,7 +39,6 @@ const HorizontalScroll = ({ posts }) => {
 };
 
 const Card = ({ post }) => {
-
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -46,7 +49,7 @@ const Card = ({ post }) => {
         <div
             key={post.id}
             onClick={handleClick}
-            className="card group relative h-[40rem] w-[29rem] rounded-xl bg-gradient-to-br from-purple-400 to-blue-700 mr-12 cursor-pointer"
+            className="card group relative h-[30rem] w-[22rem] rounded-xl bg-gradient-to-br from-purple-400 to-blue-700 cursor-pointer mx-8"
         >
             <div
                 style={{
@@ -60,14 +63,14 @@ const Card = ({ post }) => {
             <div className="card absolute inset-0 z-10 grid place-content-center">
                 <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/0 backdrop-blur-lg rounded-lg opacity-70"></div>
-                    <div className="relative p-8 text-center">
-                        <p className="text-5xl font-black uppercase text-black">
+                    <div className="relative p-6 text-center">
+                        <p className="text-3xl font-black uppercase text-black">
                             {post.title}
                         </p>
-                        <p className="text-4xl font-bold uppercase text-black">
+                        <p className="text-2xl font-bold uppercase text-black">
                             {post.created_at}
                         </p>
-                        <p className="text-3xl font-semibold uppercase text-black italic">
+                        <p className="text-xl font-semibold uppercase text-black italic">
                             {post.author}
                         </p>
                     </div>
