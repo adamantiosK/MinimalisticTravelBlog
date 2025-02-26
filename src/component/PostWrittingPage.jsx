@@ -6,6 +6,15 @@ const PostWrittingPage = () => {
         navigate('/');
     };
 
+    // Add this to see what's being saved
+    const handleSave = async () => {
+        const content = document.querySelector('.space-y-8').outerHTML;
+        // Convert className to class
+        const processedContent = content.replace(/className=/g, 'class=');
+        console.log('Content being saved:', processedContent);
+        // Your save logic here with processedContent
+    };
+
     return (
         <div className="flex flex-col min-h-screen">
             {/* Title with full-width background */}

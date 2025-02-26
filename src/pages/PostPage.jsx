@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
+import parse from 'html-react-parser';
 
 
 const PostPage = () => {
@@ -35,9 +36,15 @@ const PostPage = () => {
         navigate('/');
     };
 
-    // Sanitize the content right before rendering
-    const sanitizedContent = DOMPurify.sanitize(post.contents);
+    // First parse the HTML to React elements, then sanitize
+    const parsedContent = parse(post.contents);
 
+    // Configure DOMPurify for the container
+    DOMPurify.setConfig({
+        ALLOWED_TAGS: ['div', 'span', 'p', 'h1', 'h2', 'h3', 'img', 'section', 'a', 'svg', 'path', 'ul', 'li'],
+        ALLOWED_ATTR: ['class', 'style', 'href', 'src', 'alt', 'target', 'rel', 'viewBox', 'fill', 'stroke', 
+                      'strokeWidth', 'strokeLinecap', 'strokeLinejoin', 'd'],
+    });
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -60,7 +67,9 @@ const PostPage = () => {
             <div className="flex-grow bg-gray-800 text-white">
                 <div className="container mx-auto px-4 py-8">
                     <div className="text-lg text-justify mx-auto relative" style={{ maxWidth: '800px' }}>
-                        <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
+                        <div className="space-y-8">
+                            {parsedContent}
+                        </div>
                     </div>
                 </div>
             </div>
