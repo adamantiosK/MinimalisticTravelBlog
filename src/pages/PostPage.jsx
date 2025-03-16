@@ -9,6 +9,7 @@ const PostPage = () => {
     const { postId } = useParams();
     const navigate = useNavigate();
     const [post, setPost] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchPost = async (id) => {
@@ -19,15 +20,25 @@ const PostPage = () => {
                 }
                 const data = await response.json();
                 setPost(data);
-              } catch (error) {
+            } catch (error) {
                 console.error("Error fetching posts:", error.message);
-              }
+            } finally {
+                setIsLoading(false);
+            }
         };
 
         if (postId) {
             fetchPost(postId);
         }
     }, [postId]);
+
+    if (isLoading) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+            </div>
+        );
+    }
 
     if (!post) {
         return <div>Loading...</div>;
