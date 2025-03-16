@@ -35,7 +35,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HorizontalScroll posts={posts} isLoading={isLoading} />} />
         <Route path="/adamkounis/:postId" element={<PostPage />} />
-        <Route path="/adamkounis" element={<PostWrittingPage />} />
+        {/* <Route path="/adamkounis" element={<PostWrittingPage />} /> */}
       </Routes>
     </>
   )

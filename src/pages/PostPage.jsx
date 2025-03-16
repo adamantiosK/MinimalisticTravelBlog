@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import parse from 'html-react-parser';
+import googleMapsIcon from '../assets/googleMapsIcon.png';
 
 
 const PostPage = () => {
@@ -59,7 +60,7 @@ const PostPage = () => {
                             <span className="text-lg"></span>
                         </button>
                     </div>
-                    <h1 className="text-5xl font-bold text-center font-pacifico">{post.title}</h1>
+                    <h1 className="text-5xl font-bold text-center font-pacifico">{post.title}, {post.author}</h1>
                 </div>
             </div>
 
@@ -73,6 +74,25 @@ const PostPage = () => {
                     </div>
                 </div>
             </div>
+
+            
+            {post.googleMapsLink && (
+                <div className="fixed bottom-4 right-4">
+                    <a 
+                        href={post.googleMapsLink}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center"
+                        style={{ width: '70px', height: '70px' }}
+                    >
+                        <img 
+                            src={googleMapsIcon} 
+                            alt="Google Maps Logo" 
+                            className="w-full h-full object-cover rounded-full" 
+                        />
+                    </a>
+                </div>
+            )}
 
             {/* Footer with dark shade, stuck to the bottom */}
             <div className="bg-gray-900 text-white text-center p-1">
