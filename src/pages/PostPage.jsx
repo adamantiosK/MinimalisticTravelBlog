@@ -44,7 +44,7 @@ const PostPage = () => {
     DOMPurify.setConfig({
         ALLOWED_TAGS: ['div', 'span', 'p', 'h1', 'h2', 'h3', 'img', 'section', 'a', 'svg', 'path', 'ul', 'li'],
         ALLOWED_ATTR: ['class', 'style', 'href', 'src', 'alt', 'target', 'rel', 'viewBox', 'fill', 'stroke', 
-                      'strokeWidth', 'strokeLinecap', 'strokeLinejoin', 'd'],
+                      'strokeWidth', 'strokeLinecap', 'strokeLinejoin', 'd', 'objectPosition'],
     });
 
     return (
@@ -60,7 +60,7 @@ const PostPage = () => {
                             <span className="text-lg"></span>
                         </button>
                     </div>
-                    <h1 className="text-5xl font-bold text-center font-pacifico">{post.title}, {post.author}</h1>
+                    <h1 className="text-5xl font-bold text-center font-pacifico">{post.title}</h1>
                 </div>
             </div>
 
