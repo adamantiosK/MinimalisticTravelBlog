@@ -50,7 +50,7 @@ const Card = ({ post }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/adamkounis/${post.id}`);
+        navigate(`/${post.id}`);
     }
 
     return (

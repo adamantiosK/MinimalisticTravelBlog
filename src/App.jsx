@@ -4,6 +4,7 @@ import HorizontalScroll from './component/HorizontalScroll';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PostPage from './pages/PostPage';
+import PostPageEditor from './pages/PostPageEditor';
 import PostWrittingPage from './component/PostWrittingPage';
 
 function App() {
@@ -34,8 +35,8 @@ function App() {
       {/* <HorizontalScroll posts={posts} /> */}
       <Routes>
         <Route path="/" element={<HorizontalScroll posts={posts} isLoading={isLoading} />} />
-        <Route path="/adamkounis/:postId" element={<PostPage />} />
-        {/* <Route path="/adamkounis" element={<PostWrittingPage />} /> */}
+        <Route path="/:postId" element={<PostPage />} />
+        <Route path="/:postId/editor" element={<PostPageEditor />} />
       </Routes>
     </>
   )
