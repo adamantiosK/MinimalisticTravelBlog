@@ -5,7 +5,6 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PostPage from './pages/PostPage';
 import PostPageEditor from './pages/PostPageEditor';
-import PostWrittingPage from './component/PostWrittingPage';
 
 function App() {
   const [posts, setPosts] = useState([]);
